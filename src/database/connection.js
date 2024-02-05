@@ -8,6 +8,4 @@ const connectionBBDD = new Pool({
   port: 5432, // Puerto de la base de datos
 });
 
-module.exports = {
-  connectionBBDD,
-};
+module.exports = connectionBBDD

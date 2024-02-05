@@ -2,7 +2,7 @@ const connectionBBDD = require('../../database/connection')
 
 const getPlans = (req, res) => {
     try {
-
+console.log("prueba")
       connectionBBDD.query('SELECT "valor" FROM originales.action_drivers_019 LIMIT 1', (err, results) => {
             console.log(results)
             if (err) {
