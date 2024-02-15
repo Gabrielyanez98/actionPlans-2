@@ -1,4 +1,3 @@
-import { Response, Request } from 'express';
 import bcryptjs from 'bcryptjs';
 
 import Usuario from "../../models/Usuario";
@@ -6,7 +5,7 @@ import { generarJWT, generarTokenConfirmacion } from '../../helpers/generar-jwt'
 import { enviarCorreoConfirmacion } from '../../helpers/correos';
 
 
-const iniciarSesion = async (req: Request, res: Response) => {
+const iniciarSesion = async (req, res) => {
     const { correo, password } = req.body;
 
     try {

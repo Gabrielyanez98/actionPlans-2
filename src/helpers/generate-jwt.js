@@ -1,16 +1,15 @@
-import jwt, { Secret } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import Usuario from '../models/Usuario';
-import { UsuarioDocument } from '../interfaces/UsuarioDocument';
 
 
 
-const generarJWT = (_id: string = ''): Promise<string | undefined> => {
+const generarJWT = (_id) => {
   return new Promise((resolve, reject) => {
     const payload = { _id };
 
     jwt.sign(
       payload,
-      process.env.SECRETORPRIVATEKEY as Secret,
+      process.env.SECRETORPRIVATEKEY ,
       {
         expiresIn: '10y',
       },
@@ -26,18 +25,18 @@ const generarJWT = (_id: string = ''): Promise<string | undefined> => {
   });
 };
 
-const generarTokenConfirmacion = async (usuarioId: string): Promise<string> => {
+const generarTokenConfirmacion = async (usuarioId) => {
   try {
     const token = await jwt.sign(
       { id: usuarioId },
-      process.env.SECRETORPRIVATEKEY as Secret,
+      process.env.SECRETORPRIVATEKEY,
       {
         expiresIn: '1h',
       }
     );
 
     // Guardar el token de confirmación en la base de datos
-    const usuario: UsuarioDocument | null = await Usuario.findById(usuarioId);
+    const usuario = await Usuario.findById(usuarioId);
     if (usuario) {
       usuario.tokenConfirmacion = token;
       await usuario.save();

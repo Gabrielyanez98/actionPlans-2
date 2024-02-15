@@ -1,19 +1,11 @@
-import { Response, Request } from 'express';
-import bcryptjs from 'bcryptjs';
-
 import Usuario from "../../models/Usuario";
 import { generarTokenConfirmacion } from '../../helpers/generar-jwt';
 import { enviarCorreoConfirmacion } from '../../helpers/correos';
 
-interface RegistrarUsuarioRequest {
-    nombre: string,
-    correo: string,
-    password: string
-}
 
 
-const registrarUsuario = async (req: Request, res: Response) => {
-    const { nombre, correo, password } = req.body as RegistrarUsuarioRequest;
+const registrarUsuario = async (req, res) => {
+    const { nombre, correo, password } = req.body ;
 
     try {
         // Verificar que el correo no esté registrado previamente
