@@ -1,4 +1,4 @@
-/* import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import UsuarioModel from '../models/Usuario';
 import { UsuarioDocument } from '../interfaces/UsuarioDocument';
@@ -52,4 +52,4 @@ const validarJWT = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default validarJWT; */
+export default validarJWT;
