@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const routerPlans = require('../routes/plans')
+const routerUsers = require('../routes/users')
 /* import { dbConnection } from '../database/config';
 import eventosRouter from '../routes/eventos';
 import usuariosRouter from '../routes/usuarios'; */
@@ -17,7 +18,8 @@ class Server {
             usuarios: '/api/usuario',
         } */
         this.paths = {
-            plans: '/api/plans'
+            plans: '/api/plans',
+            users: '/api/users'
         }
 
         //Middlewares
@@ -43,6 +45,7 @@ class Server {
 
     routes() {
         this.app.use(this.paths.plans, routerPlans)
+        this.app.use(this.paths.users, routerUsers)
        /*  this.app.use(this.paths.eventos, eventosRouter)
         this.app.use(this.paths.usuarios, usuariosRouter) */
     }

@@ -1,10 +1,10 @@
-import Usuario from "../../models/Usuario";
+/* import Usuario from "../../models/Usuario";
 import { generarTokenConfirmacion } from '../../helpers/generar-jwt';
-import { enviarCorreoConfirmacion } from '../../helpers/correos';
+import { enviarCorreoConfirmacion } from '../../helpers/correos'; */
+const bcryptjs = require('bcryptjs')
 
 
-
-const registrarUsuario = async (req, res) => {
+const registerUser = async (req, res) => {
     const { nombre, correo, password } = req.body ;
 
     try {
@@ -44,4 +44,4 @@ const registrarUsuario = async (req, res) => {
     }
 };
 
-export default registrarUsuario
+module.exports = registerUser

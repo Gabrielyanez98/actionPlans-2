@@ -1,38 +1,30 @@
-import bcryptjs from 'bcryptjs';
-
-import Usuario from "../../models/Usuario";
-import { generarJWT, generarTokenConfirmacion } from '../../helpers/generar-jwt';
-import { enviarCorreoConfirmacion } from '../../helpers/correos';
+const bcryptjs = require('bcryptjs')
 
 
-const iniciarSesion = async (req, res) => {
-    const { correo, password } = req.body;
+/* import { generarJWT, generarTokenConfirmacion } from '../../helpers/generar-jwt';
+import { enviarCorreoConfirmacion } from '../../helpers/correos'; */
+
+
+const login = async (req, res) => {
+    const { email, password } = req.body;
 
     try {
         // Verificar que el usuario exista en la base de datos
-        const usuario = await Usuario.findOne({ correo });
+        /* const usuario = await Usuario.findOne({ email }); */
 
         if (!usuario) {
-            res.status(400).json({ mensaje: 'Correo o contraseña incorrectos' });
+            res.status(400).json({ mensaje: 'Email or password wrong' });
             return; 
         }
 
-        if (usuario.google) {
-            res.status(400).json({ mensaje: 'Esta cuenta está vinculada y se debe usar la opción de inicio de sesión con Google' });
-            return; 
-        }
 
-        if (!usuario.confirmado) {
+        /* if (!usuario.confirmado) {
             const token = await generarTokenConfirmacion(usuario._id);
-            await enviarCorreoConfirmacion(correo, token);
+            await enviarCorreoConfirmacion(email, token);
             res.status(400).json({ mensaje: `Tu cuenta no ha sido confirmada, te hemos enviado un nuevo correo de confirmación, por favor accede a tu correo ${correo} y confirma la cuenta para iniciar sesión` });
             return; 
-        }
+        } */
 
-        if (usuario.bloqueado) {
-            res.status(400).json({ mensaje: 'Este usuario ha sido bloqueado, si crees que ha sido un error contáctanos ' })
-            return; 
-        }
 
         // Verificar que la contraseña sea correcta
         const passwordValido = await bcryptjs.compare(password, usuario.password);
@@ -44,7 +36,7 @@ const iniciarSesion = async (req, res) => {
 
         const token = await generarJWT(usuario.id);
 
-        res.status(200).json({ mensaje: 'Inicio de sesión correcto', token })
+        res.status(200).json({ mensaje: 'Login right', token })
         return;
     } catch (error) {
         console.log(error);
@@ -52,4 +44,4 @@ const iniciarSesion = async (req, res) => {
     }
 };
 
-export default iniciarSesion
+module.exports = login

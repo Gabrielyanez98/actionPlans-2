@@ -1,28 +1,19 @@
-import  validarJWT  from '../middlewares/validar-jwt';
-import {
- 
-    login,
-    registerUser,
-} from '../controllers/users/index';
+const login = require('../controllers/users/login');
+const registerUser = require('../controllers/users/registerUser');
+/* import  validarJWT  from '../middlewares/validar-jwt'; */
+
 
 const Router = require('express')
 const routerUsers = Router();
 
-/* 
-router.get('/', obtenerUsuariosConEventos) */
 
 routerUsers.post('/login', login)
-
-
-
 routerUsers.post('/register', registerUser)
 
 
 /* router.patch('/', [
     validarJWT,
 ], actualizarPassword) */
-
-
 
 
 
