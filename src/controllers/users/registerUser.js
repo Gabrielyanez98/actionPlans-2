@@ -4,10 +4,11 @@ import { enviarCorreoConfirmacion } from '../../helpers/correos'; */
 const bcryptjs = require('bcryptjs')
 const pg = require('pg');
 const dataConnection = require('../../database/connection');
+const {  transporter } = require('../../emails/emailService');
 
 const registerUser = async (req, res) => {
     const { email, name, country, unit, role } = req.body;
-    console.log(req.body)
+
 
     try {
         /* // Verificar que el correo no esté registrado previamente
@@ -19,22 +20,22 @@ const registerUser = async (req, res) => {
 
         /*  if (!usuario) { */
         // Crear un nuevo usuario
-      
-        
+
+
 
         // Guardar el usuario en la base de datos con el estado de "no confirmado"
-       /*  usuario.confirmado = false;
-        await usuario.save(); */
+        /*  usuario.confirmado = false;
+         await usuario.save(); */
         /*   } */
         // Generar el token de confirmación y enviar el correo electrónico de confirmación
-       /*  const token = await generarTokenConfirmacion(usuario._id);
-        await enviarCorreoConfirmacion(correo, token); */
+        /*  const token = await generarTokenConfirmacion(usuario._id);
+         await enviarCorreoConfirmacion(correo, token); */
 
-    
+
 
         // Hashear el password
-        const salt = await bcryptjs.genSalt(10);
-        const passWordHashed = await bcryptjs.hash(password, salt);
+   /*      const salt = await bcryptjs.genSalt(10);
+        const passWordHashed = await bcryptjs.hash(password, salt); */
 
 
 
@@ -58,7 +59,6 @@ const registerUser = async (req, res) => {
           country,
         )
         VALUES (
-         '${passWordHashed}',
          '${email}',
          '${role}',
          '${name}',
@@ -87,6 +87,22 @@ const registerUser = async (req, res) => {
                     client.end()
                 }
             );
+        });
+
+        let mailOptions = {
+            from: 'noreply@gruposantander.com',
+            to: email,
+            subject: 'Asunto del correo',
+            text: 'Contenido del correo en texto plano',
+            html: '<p>Contenido del correo en HTML</p>'
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Correo enviado: ' + info.response);
+            }
         });
 
 

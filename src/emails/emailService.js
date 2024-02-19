@@ -1,11 +1,13 @@
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
+let transporter = nodemailer.createTransport({
+  host: 'mailintra.isban.gs.corp',
+  port:  25,
+  secure: false, // true for  465, false for other ports
   auth: {
-    user: process.env.GMAIL_USER || '',
-    pass: process.env.GMAIL_PASSWORD || '',
-  },
+      user: 'noreply@gruposantander.com',
+      pass: '' // Aquí va tu contraseña
+  }
 });
 
-export default transporter;
+module.exports =  transporter;
