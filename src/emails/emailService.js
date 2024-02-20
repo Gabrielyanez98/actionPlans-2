@@ -10,4 +10,9 @@ let transporter = nodemailer.createTransport({
   }
 });
 
+/* let transporter = nodemailer.createTransport(
+  "smtp://noreply@gruposantander.com:password@mailintra.isban.gs.corp:25"
+); */
+
+
 module.exports =  transporter;

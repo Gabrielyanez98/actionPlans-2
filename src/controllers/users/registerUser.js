@@ -4,7 +4,7 @@ import { enviarCorreoConfirmacion } from '../../helpers/correos'; */
 const bcryptjs = require('bcryptjs')
 const pg = require('pg');
 const dataConnection = require('../../database/connection');
-const {  transporter } = require('../../emails/emailService');
+const transporter = require('../../emails/emailService');
 
 const registerUser = async (req, res) => {
     const { email, name, country, unit, role } = req.body;
@@ -34,12 +34,12 @@ const registerUser = async (req, res) => {
 
 
         // Hashear el password
-   /*      const salt = await bcryptjs.genSalt(10);
-        const passWordHashed = await bcryptjs.hash(password, salt); */
+        /*      const salt = await bcryptjs.genSalt(10);
+             const passWordHashed = await bcryptjs.hash(password, salt); */
 
 
 
-        const connectionBBDD = new pg.Client(dataConnection);
+        /* const connectionBBDD = new pg.Client(dataConnection);
         await connectionBBDD.connect((err, client) => {
             if (err) {
                 console.log(err);
@@ -51,7 +51,6 @@ const registerUser = async (req, res) => {
             //originales.action_drivers_019
             const query = `
         INSERT INTO tablones.tb_ap_users_des ( 
-          password,
           email,
           role,
           name,
@@ -87,14 +86,27 @@ const registerUser = async (req, res) => {
                     client.end()
                 }
             );
+        }); */
+
+        const { exec } = require('child_process');
+
+        exec('echo "Este es un email de prueba" | mailx -s "Correo de prueba" -a "From: noreply@gruposantander.com" gabriel.yanez@servexternos.gruposantander.com', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+            console.error(`stderr: ${stderr}`);
         });
 
+/* 
         let mailOptions = {
             from: 'noreply@gruposantander.com',
             to: email,
             subject: 'Asunto del correo',
             text: 'Contenido del correo en texto plano',
-            html: '<p>Contenido del correo en HTML</p>'
+            // html: '<p>Contenido del correo en HTML</p>',
+            // replyTo: email 
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -103,7 +115,7 @@ const registerUser = async (req, res) => {
             } else {
                 console.log('Correo enviado: ' + info.response);
             }
-        });
+        }); */
 
 
 
